@@ -6,17 +6,16 @@ import gsap from 'gsap';
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
-//canvas
-const canvas = document.getElementById
+
+// Get canvas element
+const canvas = document.getElementById('d-canvas');
 
 // Basic scene setup
 const scene = new THREE.Scene();
 scene.background = null;
-// scene.fog = new THREE.Fog(0x000000, 10, 100);
-
 
 // Camera setup
-const aspect = window.innerWidth / window.innerHeight;
+const aspect = canvas.offsetWidth / canvas.offsetHeight;
 const camera = new THREE.OrthographicCamera(-5 * aspect, 5 * aspect, 5, -5, 0.1, 1000);
 camera.position.set(10, 10, 10);
 camera.zoom = 1;
@@ -26,28 +25,58 @@ camera.updateProjectionMatrix();
 camera.rotation.order = 'YXZ';
 camera.rotation.y = Math.PI / 8;
 
-const boxGeometry = new THREE.BoxGeometry(4, 4, 4)
-const boxMaterial = new THREE.MeshStandardMaterial(
-  {color: 0xffff22}
-)
-const box = 
-// Add light
+// Add box to scene
+const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+const boxMaterial = new THREE.MeshStandardMaterial({ color: 0xffff22 });
+const box = new THREE.Mesh(boxGeometry, boxMaterial);
+scene.add(box);
+
+// Add sphere to scene
+const sphereGeometry = new THREE.SphereGeometry(1.5, 12, 12);
+const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xffff12 });
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(2, -2, 2);
+scene.add(sphere);
+
+// Load GLTF model
+const loader = new GLTFLoader();
+let model;
+
+loader.load('/models/pokerassets.glb', 
+  function(gltf) {
+    model = gltf.scene;
+    model.position.set(0.1, 0, 0.1);
+    model.castShadow = true;
+    model.rotation.y = 5 * Math.PI / 4;
+    visitChildren(model, (child) => {
+      if (child.material) {
+        child.material.depthWrite = true;
+      }
+    });
+    scene.add(model);
+    animate();
+  },
+  undefined,
+  function(error) {
+    console.error('An error happened', error);
+  }
+);
+
+// Add light to scene
 scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.castShadow = true;
 light.position.set(0, 10, 0);
-scene.add(light); // Ensure the light is added to the scene
+scene.add(light);
 
-
-
-// Renderer
+// Renderer setup
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setClearColor(0x000000, 0);
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.VSMShadowMap;
-document.getElementById('app').appendChild(renderer.domElement);
+document.getElementById('d-canvas').appendChild(renderer.domElement);
 
 // Orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -58,15 +87,14 @@ controls.enablePan = false;
 controls.minDistance = 1;
 controls.maxDistance = 100;
 controls.minPolarAngle = Math.PI / 4;
-controls.maxPolarAngle = Math.PI / 2; // Corrected to allow better control
+controls.maxPolarAngle = Math.PI / 2;
 
-// Handle mouse move
-window.addEventListener('mousemove', (event) => {
-  if (!model) return; // Ensure model is loaded
-  let ratiox = event.clientX / window.innerWidth;
-  let ratioy = event.clientY / window.innerHeight;
-  model.rotation.y = transformequ(ratiox) * Math.cos(Math.PI / 12);
-});
+// Function to visit all children of a model
+function visitChildren(object, callback) {
+  object.traverse((child) => {
+    callback(child);
+  });
+}
 
 // Transform equation to linearly transform range from 0-1 to 3-5
 function transformequ(num) {
@@ -76,13 +104,12 @@ function transformequ(num) {
 // Animation loop
 let step = 0;
 const animate = function() {
-  step += 0.04;
-  if (model) {
-    model.position.y = 0.5 * Math.cos(step);
-  }
+  step += 0.004;
+  box.rotation.y = 0.5 * Math.cos(step);
+  box.rotation.x = 0.5 * Math.sin(step);
 
   requestAnimationFrame(animate);
-  controls.update(); // Only required if controls.enableDamping or controls.autoRotate are set to true
+  controls.update();
   renderer.render(scene, camera);
 };
 
