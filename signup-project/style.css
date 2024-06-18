@@ -1,96 +1,71 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+body{
+  padding: 0;
   margin: 0;
+  box-sizing: border-box;
+}
+section{
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 }
+.container{
+  width: 75vw;
+  height: 80vh;
+  background-color: yellow;
+  border-radius: 40px;
+  display: flex;
+  padding: 20px;
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
 }
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+#d-canvas{
+  width: 40vw;
+  background-color: white;
+  border-radius: 30px;
+}
+#signup{
+  margin: 50px auto;
+}
+.logo{
+  font-size: 20px;
+  font-weight: bold;
   text-align: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+h3{
+  margin: 50px ;
+  font-size: 40px;
+  padding: 0;
+  line-height: 0;
+  text-align: center;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+button{
+  width: 100%;
+  height: 35px;
+  border-radius: 20px;
+  margin-top: 10px;
+  border: none;
 }
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+h5{
+  text-align: center;
+  margin-bottom: 60px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+input[type="password"],input[type="email"]{
+  width: 100%;
+  height: 20px;
+  background-color: transparent;
+  border-width: 0px 0px 2px 0px;
+  border-style: solid;
+  margin-bottom: 30px;
 }
-button:hover {
-  border-color: #646cff;
+.rememb{
+  display: flex;
+  justify-content: space-between;
+  
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.checkbox{
+  display: flex;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
