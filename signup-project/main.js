@@ -26,10 +26,10 @@ camera.rotation.order = 'YXZ';
 camera.rotation.y = Math.PI / 8;
 
 // Add box to scene
-const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
-const boxMaterial = new THREE.MeshStandardMaterial({ color: 0xffff22 });
-const box = new THREE.Mesh(boxGeometry, boxMaterial);
-scene.add(box);
+// const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+// const boxMaterial = new THREE.MeshStandardMaterial({ color: 0xffff22 });
+// const box = new THREE.Mesh(boxGeometry, boxMaterial);
+// scene.add(box);
 
 // Add sphere to scene
 const sphereGeometry = new THREE.SphereGeometry(1.5, 12, 12);
@@ -105,8 +105,8 @@ function transformequ(num) {
 let step = 0;
 const animate = function() {
   step += 0.004;
-  box.rotation.y = 0.5 * Math.cos(step);
-  box.rotation.x = 0.5 * Math.sin(step);
+  model.rotation.y = 0.5 * Math.cos(step);
+  model.rotation.x = 0.5 * Math.sin(step);
 
   requestAnimationFrame(animate);
   controls.update();
