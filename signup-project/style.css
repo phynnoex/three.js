@@ -9,12 +9,12 @@ section{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: rgb(227, 227, 227);
 }
 .container{
   width: 75vw;
   height: 80vh;
-  background-color: yellow;
+  background-color: white;
   border-radius: 40px;
   display: flex;
   padding: 20px;
@@ -22,7 +22,7 @@ section{
 }
 #d-canvas{
   width: 40vw;
-  background-color: white;
+  background-color: rgb(227, 227, 227);
   border-radius: 30px;
 }
 #signup{
